@@ -6,7 +6,9 @@
  *  Copyright (c) 2008 Jean-Daniel Dupas. All rights reserved.
  */
 
-#include <Security/Security.h>
+#import <Security/Security.h>
+#import <Foundation/Foundation.h>
+
 #import <SArchiveKit/SABase.h>
 
 /* setting owner/group behavior */
