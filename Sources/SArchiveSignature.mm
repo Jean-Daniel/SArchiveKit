@@ -160,8 +160,8 @@ int32_t _SArchiveSigner(xar_signature_t sig, void *context, uint8_t *data, uint3
     signlen = SecKeyGetBlockSize(pkey);
     CFRelease(pkey);
   }
-  if (signlen > 0) {
-    xar_signature_t sign = xar_signature_new(arch, [kSArchiveSignatureSHA1WithRSA UTF8String], signlen, _SArchiveSigner, identity);
+  if (signlen > 0 && signlen < INT32_MAX) {
+    xar_signature_t sign = xar_signature_new(arch, [kSArchiveSignatureSHA1WithRSA UTF8String], (int32_t)signlen, _SArchiveSigner, identity);
     if (sign) {
       signature = [[SArchiveSignature alloc] initWithSignature:sign];
       signature->_identity = SPXCFRetain(identity);

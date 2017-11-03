@@ -96,7 +96,7 @@
   if (str) {
     const char *cstr = [str UTF8String];
     if (cstr) {
-      mode = strtol(cstr, NULL, 8);
+      mode = (mode_t)strtol(cstr, NULL, 8);
     }
   }
   return mode;
