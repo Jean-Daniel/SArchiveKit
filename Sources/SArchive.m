@@ -500,7 +500,7 @@ NSString * const SArchiveErrorDomain = @"org.shadowlab.sarchive.error";
   const char *str = xar_err_get_string(errctxt);
   
   if (!f) {
-    SPXDebug(@"Cannot retreive error file");
+    spx_debug("Cannot retreive error file");
     return 0;
   }
   

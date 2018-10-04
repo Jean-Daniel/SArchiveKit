@@ -57,7 +57,7 @@ const char *SArchiveGetPath(NSURL *url, bool resolve) {
   @try {
     return url.path.fileSystemRepresentation;
   } @catch(NSException *e) {
-    SPXLogException(e);
+    spx_log_exception(e);
   }
   return NULL;
 }
