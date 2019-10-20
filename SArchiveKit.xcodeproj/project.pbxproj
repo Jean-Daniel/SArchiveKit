@@ -451,8 +451,11 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1110;
 				TargetAttributes = {
+					1B21339A0ECCB93B0069C59E = {
+						ProvisioningStyle = Manual;
+					};
 					8DC2EF4F0486A6940098B216 = {
 						ProvisioningStyle = Automatic;
 					};
@@ -465,6 +468,7 @@
 			knownRegions = (
 				fr,
 				en,
+				Base,
 			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* SArchive */;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
