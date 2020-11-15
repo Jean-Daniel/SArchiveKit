@@ -14,7 +14,7 @@
 #include <grp.h>
 #include <unistd.h>
 #include <sys/time.h>
-#include <libkern/OSAtomic.h>
+#include <stdatomic.h>
 
 #import "SArchiveXar.h"
 
@@ -80,7 +80,7 @@ int32_t sa_xar_err_handler(int32_t severit, int32_t err, xar_errctx_t ctx, void 
 
   bool _ok;
   volatile bool _cancel;
-  volatile int32_t _extracting; /* atomic lock */
+  volatile _Atomic int32_t _extracting; /* atomic lock */
 }
 
 - (instancetype)initWithURL:(NSURL *)anURL {
@@ -464,7 +464,8 @@ int32_t sa_xar_err_handler(int32_t severit, int32_t err, xar_errctx_t ctx, void 
 }
 
 - (BOOL)extractAtURL:(NSURL *)anURL handler:(id<SArchiveHandler>)handler {
-  if (!OSAtomicCompareAndSwap32(0, 1, &_extracting))
+  int32_t expected = 0;
+  if (!atomic_compare_exchange_strong(&_extracting, &expected, 1))
 		SPXThrowException(NSInternalInconsistencyException, @"%@ is already extracting data", self);
   
   /* preload archive (if not already done) */
@@ -476,7 +477,7 @@ int32_t sa_xar_err_handler(int32_t severit, int32_t err, xar_errctx_t ctx, void 
   /* release handler */
   [sa_delegate release];
   sa_delegate = nil;
-  _extracting = 0;
+  atomic_exchange(&_extracting, 0);
   
   return _ok && !_cancel;
 }
